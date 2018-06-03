@@ -1,5 +1,8 @@
 --
 
+local debug = true
+
+
 local Pipe = require('pipe')
 local Bird = require('bird')
 local Menu = require('menu')
@@ -8,8 +11,8 @@ local Score = require('score')
 local game, pipe, bird, menu, score
 
 local reset = function()
-    pipe = Pipe:new()
-    bird = Bird:new()
+    pipe = Pipe:new({ debug = debug })
+    bird = Bird:new({ debug = debug })
     score = Score:new()
     menu = Menu:new()
     game = { state = 'start', score = 0 }

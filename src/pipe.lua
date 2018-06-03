@@ -4,8 +4,9 @@ local Pipe = {}
 Pipe.__index = Pipe
 
 
-function Pipe:new()
+function Pipe:new(params)
     local this = {
+        debug = params.debug == true or false,
         width = 54,
         speed = 300,
         color = {0, 255, 0},
@@ -48,6 +49,13 @@ function Pipe:draw()
     love.graphics.setColor(self.color)
     love.graphics.rectangle('fill', self.x, 0, self.width, self.top.length)
     love.graphics.rectangle('fill', self.x, self.bottom.y, self.width, self.bottom.length)
+
+    if self.debug then
+        love.graphics.setColor(0, 0, 255)
+        love.graphics.setLineWidth(4)
+        love.graphics.rectangle('line', self.x, 0, self.width, self.top.length)
+        love.graphics.rectangle('line', self.x, self.bottom.y, self.width, self.bottom.length)
+    end
 end
 
 
