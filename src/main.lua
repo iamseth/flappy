@@ -43,6 +43,16 @@ end
 
 
 function love.draw()
+    if (game.state == 'start') then
+        love.graphics.setFont(love.graphics.newFont(40))
+        love.graphics.printf('Press space to begin.', 200, 200, 600, 'center')
+    end
+
+    if (game.state == 'pause') then
+        love.graphics.setFont(love.graphics.newFont(40))
+        love.graphics.printf('Game Paused', 200, 200, 600, 'center')
+    end
+
     pipe:draw()
     bird:draw()
 
