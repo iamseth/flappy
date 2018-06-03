@@ -61,7 +61,9 @@ function Bird:draw()
     if self.debug then
         love.graphics.setColor(0, 0, 255)
         love.graphics.setLineWidth(4)
-        love.graphics.rectangle('line', self.x + self.hitbox.ox, self.y + self.hitbox.oy, self.hitbox.width, self.hitbox.height)
+        love.graphics.rectangle('line', self.x + self.hitbox.ox,
+                                self.y + self.hitbox.oy,
+                                self.hitbox.width, self.hitbox.height)
     end
 end
 

@@ -3,10 +3,10 @@ function love.conf(t)
     t.appendidentity = false            -- Search files in source directory before save directory (boolean)
     t.version = "11.1"                  -- The LÖVE version this game was made for (string)
     t.console = false                   -- Attach a console (boolean, Windows only)
-    t.accelerometerjoystick = true      -- Enable the accelerometer on iOS and Android by exposing it as a Joystick (boolean)
-    t.externalstorage = false           -- True to save files (and read from the save directory) in external storage on Android (boolean)
+    t.accelerometerjoystick = true      -- Enable the accelerometer on iOS and Android by exposing it as a Joystick
+    t.externalstorage = false           -- Save files (and read from the save directory) in external storage on Android
     t.gammacorrect = false              -- Enable gamma-correct rendering, when supported by the system (boolean)
-    t.audio.mixwithsystem = true        -- Keep background music playing when opening LOVE (boolean, iOS and Android only)
+    t.audio.mixwithsystem = true        -- Keep background music playing (boolean, iOS and Android only)
     t.window.title = "Flappy"           -- The window title (string)
     t.window.icon = nil                 -- Filepath to an image to use as the window's icon (string)
     t.window.width = 1024               -- The window width (number)
@@ -37,7 +37,7 @@ function love.conf(t)
     t.modules.sound = true              -- Enable the sound module (boolean)
     t.modules.system = true             -- Enable the system module (boolean)
     t.modules.thread = true             -- Enable the thread module (boolean)
-    t.modules.timer = true              -- Enable the timer module (boolean), Disabling it will result 0 delta time in love.update
+    t.modules.timer = true              -- Enable the timer module (boolean), Will result 0 delta time in love.update
     t.modules.touch = true              -- Enable the touch module (boolean)
     t.modules.video = true              -- Enable the video module (boolean)
     t.modules.window = true             -- Enable the window module (boolean)
