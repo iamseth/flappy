@@ -8,7 +8,7 @@ local Bird = require('bird')
 local Menu = require('menu')
 local Score = require('score')
 
-local game, pipe, bird, menu, score
+local game, pipe, pipe2, bird, menu, score
 
 -- Helper function for resetting a game.
 local reset = function()
