@@ -1,12 +1,19 @@
 local Pipe = require 'pipe'
 local Bird = require 'bird'
 
-local game = { score = 0, state = 'start' }
+local game = {}
 local bird = nil
 local pipe = nil
 
 
 function love.load()
+    game.reset()
+end
+
+
+function game.reset()
+    game.score = 0
+    game.state = 'start'
     pipe = Pipe:new()
     bird = Bird:new()
 end
@@ -53,6 +60,13 @@ function love.draw()
         love.graphics.printf('Game Paused', 200, 200, 600, 'center')
     end
 
+    if (game.state == 'end') then
+        love.graphics.setFont(love.graphics.newFont(40))
+        love.graphics.printf('Game Over', 200, 200, 600, 'center')
+        love.graphics.printf('Press enter to restart.', 200, 500, 600, 'center')
+    end
+
+
     pipe:draw()
     bird:draw()
 
@@ -75,6 +89,10 @@ function love.keyreleased(key)
         end
     end
 
+    if game.state == 'end' and key == 'return' then
+        game.reset()
+        game.state = 'start'
+    end
 end
 
 
