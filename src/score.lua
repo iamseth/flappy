@@ -38,14 +38,10 @@ end
 
 function Score:draw()
     -- Print score to screen.
-    love.graphics.setFont(love.graphics.newFont(40))
+    love.graphics.setFont(love.graphics.newFont(20))
     love.graphics.setColor(255, 255, 255)
-    love.graphics.print(self.current, love.graphics.getWidth() / 2, 100)
-
-    -- print highscore to screen
-    love.graphics.setFont(love.graphics.newFont(40))
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.print(self.high, love.graphics.getWidth() / 2, 200)
+    love.graphics.print(string.format('SCORE %d', self.current), 50, 20)
+    love.graphics.print(string.format('HIGH SCORE %d', self.high), 300, 20)
 end
 
 
