@@ -65,6 +65,14 @@ function love.keyreleased(key)
         game.state = 'run'
     end
 
+    if key == 'p' then
+        if not(game.state == 'pause') then
+            game.state = 'pause'
+        else
+            game.state = 'run'
+        end
+    end
+
 end
 
 
