@@ -1,16 +1,23 @@
-local Pipe = require 'pipe'
-local Bird = require 'bird'
-local Score = require 'score'
-local Menu = require 'menu'
+--
 
-local game = {}
-local bird = nil
-local pipe = nil
-local score = nil
+local Pipe = require('pipe')
+local Bird = require('bird')
+local Menu = require('menu')
+local Score = require('score')
+
+local game, pipe, bird, menu, score
+
+local reset = function()
+    pipe = Pipe:new()
+    bird = Bird:new()
+    score = Score:new()
+    menu = Menu:new()
+    game = { state = 'start', score = 0 }
+end
 
 
 function love.load()
-    game.reset()
+    reset()
 end
 
 
@@ -19,27 +26,14 @@ function love.quit()
 end
 
 
-function game.reset()
-    game.score = 0
-    game.state = 'start'
-    pipe = Pipe:new()
-    bird = Bird:new()
-    score = Score:new()
-    menu = Menu:new()
-end
-
-
 function love.update(dt)
-    if not(game.state == 'run') then
-        return
-    end
+    if not(game.state == 'run') then return end
 
     -- handles scoring.
     -- TODO fix this hack. Need to determine when bird crosses through a pipe.
     if bird.x > pipe.x and (bird.x < pipe.x + 5) then
         score:increment()
     end
-
 
     -- handle deaths
     if not(bird.x + bird.width < pipe.x  or pipe.x + pipe.width < bird.x or bird.y + bird.height < pipe.bottom.y or pipe.bottom.y + pipe.bottom.length < bird.y ) then
@@ -79,7 +73,7 @@ function love.keyreleased(key)
     end
 
     if game.state == 'end' and key == 'return' then
-        game.reset()
+        reset()
         game.state = 'start'
     end
 end

@@ -11,7 +11,7 @@ function Menu:new()
 end
 
 
-function Menu:draw(state)
+function Menu:draw(state) -- luacheck: ignore
     if (state == 'start') then
         love.graphics.setFont(love.graphics.newFont(40))
         love.graphics.printf('Press space to begin.', 200, 200, 600, 'center')
