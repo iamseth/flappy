@@ -1,46 +1,50 @@
 local Pipe = require 'pipe'
 local Bird = require 'bird'
 
-local game = { bird = nil, pipe = nil, score = 0, state = 'start' }
+local game = { score = 0, state = 'start' }
+local bird = nil
+local pipe = nil
 
 
 function love.load()
-  game.pipe = Pipe:new()
-  game.bird = Bird:new()
+  pipe = Pipe:new()
+  bird = Bird:new()
 end
 
 function love.update(dt)
   if game.state == 'end' then return end
 
   -- TODO fix this hack. Need to determine when bird crosses through a pipe.
-  if game.bird.x > game.pipe.x and (game.bird.x < game.pipe.x + 5) then
+  if bird.x > pipe.x and (bird.x < pipe.x + 5) then
     game.score = game.score + 1
   end
-  game.pipe:update(dt)
-  game.bird:update(dt)
+  pipe:update(dt)
+  bird:update(dt)
 
 
-
-  if not(game.bird.x + game.bird.width < game.pipe.x  or game.pipe.x + game.pipe.width < game.bird.x or game.bird.y + game.bird.height < game.pipe.bottom.y or game.pipe.bottom.y + game.pipe.bottom.length < game.bird.y ) then
+  -- Check for pipe collisions.
+  if not(bird.x + bird.width < pipe.x  or pipe.x + pipe.width < bird.x or bird.y + bird.height < pipe.bottom.y or pipe.bottom.y + pipe.bottom.length < bird.y ) then
     game.state = 'end'
   end
 
-  if not(game.bird.x + game.bird.width < game.pipe.x  or game.pipe.x + game.pipe.width < game.bird.x or game.bird.y + game.bird.height < game.pipe.top.y or game.pipe.top.y + game.pipe.top.length < game.bird.y ) then
+  if not(bird.x + bird.width < pipe.x  or pipe.x + pipe.width < bird.x or bird.y + bird.height < pipe.top.y or pipe.top.y + pipe.top.length < bird.y ) then
     game.state = 'end'
   end
 
 
+  -- Check for ground collisions.
+  if bird.y > love.graphics.getHeight() then
+    game.state = 'end'
+  end
 
-
-  --if game.bird.x + game.bird.width > game.pipe.x then
-   -- if (game.bird.y <= game.pipe.top_height) or (game.bird.y >= game.pipe.top_height + game.pipe.gap) then
-    --  game.state = 'end'
-    --end
 end
 
 function love.draw()
-  game.pipe:draw()
-  game.bird:draw()
+  pipe:draw()
+  bird:draw()
 
-  love.graphics.print(game.score, 100, 100)
+  -- Print score to screen.
+  love.graphics.setFont(love.graphics.newFont(40))
+  love.graphics.setColor(255, 255, 255)
+  love.graphics.print(game.score, love.graphics.getWidth() / 2, 100)
 end
