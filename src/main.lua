@@ -1,7 +1,7 @@
 --
 
+-- Enable debug mode. Will turn on hitboxes and debug log output.
 local debug = true
-
 
 local Pipe = require('pipe')
 local Bird = require('bird')
@@ -10,6 +10,7 @@ local Score = require('score')
 
 local game, pipe, bird, menu, score
 
+-- Helper function for resetting a game.
 local reset = function()
     pipe = Pipe:new({ debug = debug })
     bird = Bird:new({ debug = debug })
@@ -54,9 +55,12 @@ end
 
 
 function love.keyreleased(key)
-    if (game.state == 'start' or game.state == 'pause') and key == 'space' then
+    -- Allow user to start game.
+    if game.state == 'start' and key == 'space' then
         game.state = 'run'
     end
+
+    -- Allow user to pause/unpause game.
     if key == 'p' then
         if not(game.state == 'pause') then
             game.state = 'pause'
@@ -65,6 +69,7 @@ function love.keyreleased(key)
         end
     end
 
+    -- Allow user to restart game.
     if game.state == 'end' and key == 'return' then
         reset()
         game.state = 'start'
@@ -73,7 +78,6 @@ end
 
 
 function love.focus(f)
-    if game.state == 'run' and not(f) then
-        game.state = 'pause'
-    end
+    -- Pause the game if the window loses focus.
+    if game.state == 'run' and not(f) then game.state = 'pause' end
 end
