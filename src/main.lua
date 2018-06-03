@@ -27,28 +27,18 @@ end
 
 
 function love.update(dt)
+    -- Only run update if we're in the run state.
     if not(game.state == 'run') then return end
 
-    -- handles scoring.
-    -- TODO fix this hack. Need to determine when bird crosses through a pipe.
-    if bird.x > pipe.x and (bird.x < pipe.x + 5) then
-        score:increment()
-    end
+    -- Check if we've collided with a pipe or ground.
+    if bird:isCollision(pipe) then game.state = 'end'; score:save() end
 
-    -- handle deaths
-    if not(bird.x + bird.width < pipe.x  or pipe.x + pipe.width < bird.x or bird.y + bird.height < pipe.bottom.y or pipe.bottom.y + pipe.bottom.length < bird.y ) then
-        game.state = 'end'
-        score:save()
-    elseif not(bird.x + bird.width < pipe.x  or pipe.x + pipe.width < bird.x or bird.y + bird.height < pipe.top.y or pipe.top.y + pipe.top.length < bird.y ) then
-        game.state = 'end'
-        score:save()
-    elseif bird.y > love.graphics.getHeight() then
-        game.state = 'end'
-        score:save()
-    end
+    -- Check if we've flown past a pipe to handle scoring.
+    if bird:isPastPipe(pipe) then score:increment() end
 
-    pipe:update(dt)
+    -- Run the update function for our bird and pipe objects.
     bird:update(dt)
+    pipe:update(dt)
 end
 
 
