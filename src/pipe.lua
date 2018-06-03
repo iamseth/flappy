@@ -1,18 +1,20 @@
 -- Define a Pipe class to represent a pipe object.
 
-local class = require 'middleclass'
-local Pipe = class('Pipe')
+local Pipe = {}
+Pipe.__index = Pipe
 
 
-function Pipe:initialize()
-  self.width = 100
-  self.speed = 300
-  self.color = {0, 255, 0}
-  self.x = 0
-  self.top = { y = 0, length = 0 }
-  self.bottom = { y = 0, length = 0 }
-
-  self:reset()
+function Pipe:new()
+    local this = {
+        width = 54,
+        speed = 300,
+        color = {0, 255, 0},
+        x = 0,
+        top = { y = 0, length = 0 },
+        bottom = { y = 0, length = 0 },
+    } 
+    setmetatable(this, self)
+    return this
 end
 
 
@@ -31,7 +33,6 @@ function Pipe:reset()
   -- reset x position to offscreen to the right.
   self.x = love.graphics.getWidth() + 200
 
-
   -- adjust the height of the top pipe to a random size with enough for the gap.
   self.top.length = love.math.random(self.gap, love.graphics.getHeight() - self.gap)
 
@@ -39,8 +40,7 @@ function Pipe:reset()
   self.bottom.length = (love.graphics.getHeight() - self.top.length) - self.gap
 
   self.bottom.y = self.top.length + self.gap
-  self.top.y =  0 
-
+  self.top.y = 0
 end
 
 

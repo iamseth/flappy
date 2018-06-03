@@ -1,15 +1,19 @@
 -- Define a Bird class to represent a self object.
 
-local class = require 'middleclass'
-local Bird = class('Bird')
+local Bird = {}
+Bird.__index = Bird
 
 
-function Bird:initialize()
-  self.x = 200
-  self.y = love.graphics.getHeight() / 2
-  self.width = 20
-  self.height = 20
-  self.color = {255, 255, 0}
+function Bird:new()
+    local this = {
+        x = 200,
+        y = love.graphics.getHeight() / 2,
+        width = 20,
+        height = 20,
+        color = {255, 255, 0}
+    }
+    setmetatable(this, self)
+    return this
 end
 
 
