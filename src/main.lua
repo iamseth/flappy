@@ -1,13 +1,20 @@
 local Pipe = require 'pipe'
 local Bird = require 'bird'
+local Score = require 'score'
 
 local game = {}
 local bird = nil
 local pipe = nil
+local score = nil
 
 
 function love.load()
     game.reset()
+end
+
+
+function love.quit()
+    score:save()
 end
 
 
@@ -16,6 +23,7 @@ function game.reset()
     game.state = 'start'
     pipe = Pipe:new()
     bird = Bird:new()
+    score = Score:new()
 end
 
 
@@ -26,7 +34,7 @@ function love.update(dt)
 
     -- TODO fix this hack. Need to determine when bird crosses through a pipe.
     if bird.x > pipe.x and (bird.x < pipe.x + 5) then
-        game.score = game.score + 1
+        score:increment()
     end
     pipe:update(dt)
     bird:update(dt)
@@ -35,16 +43,19 @@ function love.update(dt)
     -- Check for pipe collisions.
     if not(bird.x + bird.width < pipe.x  or pipe.x + pipe.width < bird.x or bird.y + bird.height < pipe.bottom.y or pipe.bottom.y + pipe.bottom.length < bird.y ) then
         game.state = 'end'
+        score:save()
     end
 
     if not(bird.x + bird.width < pipe.x  or pipe.x + pipe.width < bird.x or bird.y + bird.height < pipe.top.y or pipe.top.y + pipe.top.length < bird.y ) then
         game.state = 'end'
+        score:save()
     end
 
 
     -- Check for ground collisions.
     if bird.y > love.graphics.getHeight() then
         game.state = 'end'
+        score:save()
     end
 end
 
@@ -69,11 +80,7 @@ function love.draw()
 
     pipe:draw()
     bird:draw()
-
-    -- Print score to screen.
-    love.graphics.setFont(love.graphics.newFont(40))
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.print(game.score, love.graphics.getWidth() / 2, 100)
+    score:draw()
 end
 
 
