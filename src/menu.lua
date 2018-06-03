@@ -18,7 +18,7 @@ function Menu:draw(state)
 
     -- Set some defaults.
     love.graphics.setFont(self.font)
-    love.graphics.setcolor(self.color)
+    love.graphics.setColor(self.color)
 
     if (state == 'start') then
         love.graphics.printf('Press space to begin.', 200, 280, 600, 'center')
