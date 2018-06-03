@@ -12,7 +12,7 @@ function Pipe:new()
         x = 0,
         top = { y = 0, length = 0 },
         bottom = { y = 0, length = 0 },
-    } 
+    }
     setmetatable(this, self)
     return this
 end
