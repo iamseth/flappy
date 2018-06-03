@@ -10,7 +10,7 @@ function Pipe:new(params)
         width = 54,
         speed = 300,
         color = {0, 255, 0},
-        x = 0,
+        x = params.x or 0,
         top = { y = 0, length = 0 },
         bottom = { y = 0, length = 0 },
     }

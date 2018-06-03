@@ -13,6 +13,7 @@ local game, pipe, bird, menu, score
 -- Helper function for resetting a game.
 local reset = function()
     pipe = Pipe:new({ debug = debug })
+    pipe2 = Pipe:new({ debug = debug, x = 500 })
     bird = Bird:new({ debug = debug })
     score = Score:new()
     menu = Menu:new()
@@ -36,18 +37,22 @@ function love.update(dt)
 
     -- Check if we've collided with a pipe or ground.
     if bird:isCollision(pipe) then game.state = 'end'; score:save() end
+    if bird:isCollision(pipe2) then game.state = 'end'; score:save() end
 
     -- Check if we've flown past a pipe to handle scoring.
     if bird:isPastPipe(pipe) then score:increment() end
+    if bird:isPastPipe(pipe2) then score:increment() end
 
     -- Run the update function for our bird and pipe objects.
     bird:update(dt)
     pipe:update(dt)
+    pipe2:update(dt)
 end
 
 
 function love.draw()
     pipe:draw()
+    pipe2:draw()
     bird:draw()
     score:draw()
     menu:draw(game.state)
