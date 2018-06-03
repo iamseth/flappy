@@ -2,6 +2,13 @@ local Pipe = require 'pipe'
 local Bird = require 'bird'
 
 local game = { score = 0, state = 'start' }
+-- posible states
+-- start = before game
+-- run = game is running
+-- pause == game is paused
+-- end == game is over
+
+
 local bird = nil
 local pipe = nil
 
@@ -12,7 +19,9 @@ function love.load()
 end
 
 function love.update(dt)
-  if game.state == 'end' then return end
+    if not(game.state == 'run') then
+        return
+    end
 
   -- TODO fix this hack. Need to determine when bird crosses through a pipe.
   if bird.x > pipe.x and (bird.x < pipe.x + 5) then
@@ -47,4 +56,20 @@ function love.draw()
   love.graphics.setFont(love.graphics.newFont(40))
   love.graphics.setColor(255, 255, 255)
   love.graphics.print(game.score, love.graphics.getWidth() / 2, 100)
+end
+
+
+
+function love.keyreleased(key)
+    if (game.state == 'start' or game.state == 'pause') and key == 'space' then
+        game.state = 'run'
+    end
+
+end
+
+
+function love.focus(f)
+    if game.state == 'run' and not(f) then
+        game.state = 'pause'
+    end
 end

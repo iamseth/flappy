@@ -19,7 +19,7 @@ end
 
 function Bird:update(dt)
   self.y = self.y + 200 * dt
-  if love.keyboard.isDown('w') or love.keyboard.isDown('up') then
+  if love.keyboard.isDown('space') then
     self.y = self.y - 10
   end
 end
