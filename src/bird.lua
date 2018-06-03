@@ -18,16 +18,16 @@ end
 
 
 function Bird:update(dt)
-  self.y = self.y + 200 * dt
-  if love.keyboard.isDown('space') then
-    self.y = self.y - 10
-  end
+    self.y = self.y + 200 * dt
+    if love.keyboard.isDown('space') then
+        self.y = self.y - 10
+    end
 end
 
 
 function Bird:draw()
-  love.graphics.setColor(self.color)
-  love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+    love.graphics.setColor(self.color)
+    love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
 end
 
 
