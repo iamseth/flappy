@@ -1,5 +1,7 @@
 -- Define a Bird class to represent a self object.
 
+local Animation = require('animation')
+
 local Bird = {}
 Bird.__index = Bird
 
@@ -8,10 +10,22 @@ function Bird:new()
     local this = {
         x = 200,
         y = love.graphics.getHeight() / 2,
-        width = 20,
-        height = 20,
-        color = {255, 255, 0}
+        width = 76,
+        height = 32,
+        texture = love.graphics.newImage('assets/spritesheet.png'),
     }
+
+    this.animation = Animation:create({
+        texture = this.texture,
+        frames = {
+            love.graphics.newQuad(0, 0, 76, 32, this.texture:getDimensions()),
+            love.graphics.newQuad(0, 32, 76, 32, this.texture:getDimensions())
+        },
+        interval = 0.2
+    })
+
+    this.currentFrame = this.animation:getCurrentFrame()
+
     setmetatable(this, self)
     return this
 end
@@ -22,12 +36,13 @@ function Bird:update(dt)
     if love.keyboard.isDown('space') then
         self.y = self.y - 10
     end
+    self.animation:update(dt)
 end
 
 
 function Bird:draw()
-    love.graphics.setColor(self.color)
-    love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+    love.graphics.draw(self.texture, self.animation:getCurrentFrame(), self.x, self.y, 0, 1, 1)
+    --love.graphics.rectangle('line', self.x, self.y, self.width, self.height) -- FIXME remove after bugging hitbox
 end
 
 
