@@ -10,6 +10,7 @@ local Score = require('score')
 
 local game, pipe, pipe2, bird, menu, score
 
+
 -- Helper function for resetting a game.
 local reset = function()
     pipe = Pipe:new({ debug = debug })
@@ -18,16 +19,6 @@ local reset = function()
     score = Score:new()
     menu = Menu:new()
     game = { state = 'start', score = 0 }
-end
-
-
-function love.load()
-    reset()
-end
-
-
-function love.quit()
-    score:save()
 end
 
 
@@ -61,7 +52,8 @@ end
 
 function love.keyreleased(key)
     -- Allow user to start game.
-    if game.state == 'start' and key == 'space' then
+    if (game.state == 'start' or game.state == 'end') and key == 'space' then
+        reset()
         game.state = 'run'
     end
 
@@ -73,16 +65,20 @@ function love.keyreleased(key)
             game.state = 'run'
         end
     end
-
-    -- Allow user to restart game.
-    if game.state == 'end' and key == 'return' then
-        reset()
-        game.state = 'start'
-    end
 end
 
 
 function love.focus(f)
     -- Pause the game if the window loses focus.
     if game.state == 'run' and not(f) then game.state = 'pause' end
+end
+
+
+function love.load()
+    reset()
+end
+
+
+function love.quit()
+    score:save()
 end
