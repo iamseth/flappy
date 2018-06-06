@@ -13,7 +13,7 @@ function Bird:new(params)
         y = love.graphics.getHeight() / 2,
         width = 96,
         height = 95,
-        color = { 255, 255, 0 },
+        color = { 0.8, 0.294, 0.035 },
         texture = love.graphics.newImage('assets/sprites.png'),
     }
 
@@ -55,7 +55,6 @@ end
 
 
 function Bird:draw()
-    love.graphics.setColor(self.color)
     love.graphics.draw(self.texture, self.animation:getCurrentFrame(), self.x, self.y, 0, 1, 1)
 
     if self.debug then

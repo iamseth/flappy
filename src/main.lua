@@ -42,9 +42,9 @@ end
 
 
 function love.draw()
+    bird:draw()
     pipe:draw()
     pipe2:draw()
-    bird:draw()
     score:draw()
     menu:draw(game.state)
 end
@@ -75,6 +75,7 @@ end
 
 
 function love.load()
+    love.graphics.setBackgroundColor(0.365, 0.58, 0.984)
     reset()
 end
 
